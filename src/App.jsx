@@ -38,7 +38,7 @@ function App() {
   return (
     <div>
       <TransactionForm funcAddTransact={handleAddTransaction} />
-      <Dashboard transactions={}/>
+      <Dashboard transactions={transactions} />
       <TransactionList
         transactions={transactions}
         handleDelete={handleDelete}
