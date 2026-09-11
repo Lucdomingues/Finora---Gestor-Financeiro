@@ -1,16 +1,44 @@
-# React + Vite
+## 1. Funcionalidades Principais (O que o usuário pode fazer)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- **Adicionar Transação:** Um formulário para inserir uma nova movimentação, contendo:
+  - Descrição (ex: "Salário", "Mercado").
+  - Valor numérico.
+  - Tipo (Entrada ou Saída).
+- **Painel de Resumo (Dashboard):** Exibição em tempo real do Total de Entradas, Total de Saídas e o Saldo Atual.
+- **Listagem de Transações:** Uma tabela ou lista mostrando todas as movimentações cadastradas.
+- **Exclusão:** Um botão ao lado de cada transação para removê-la da lista.
+- **Persistência de Dados:** As transações não devem sumir ao recarregar a página (usaremos o `localStorage` do navegador para isso).
 
-Currently, two official plugins are available:
+## 2. Requisitos Técnicos (O que você vai treinar)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**JavaScript (Manipulação de Arrays):**
 
-## React Compiler
+- Use `.reduce()` para calcular os totais (Entradas, Saídas e Saldo) a partir do array principal.
+- Use `.map()` para renderizar a lista de transações na tela.
+- Use `.filter()` para a funcionalidade de excluir uma transação específica pelo seu ID.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Gerenciamento de Estado (`useState`):**
 
-## Expanding the ESLint configuration
+- Crie um estado para armazenar o array de transações.
+- Crie estados separados para controlar os inputs do formulário (descrição, valor e tipo) antes de enviá-los.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Efeitos Colaterais (`useEffect`):**
+
+- Use um `useEffect` para carregar os dados do `localStorage` assim que o aplicativo abrir.
+- Use outro `useEffect` para salvar o array de transações no `localStorage` sempre que ele for modificado (adicionado ou removido).
+
+**Comunicação entre Componentes (Props e Prop Drilling):**
+
+- Você sentirá na prática como o estado principal no topo da aplicação precisa ser passado para baixo.
+
+---
+
+## 3. Arquitetura de Componentes Sugerida
+
+Para treinar a passagem de Props, divida sua interface da seguinte forma:
+
+- **`<App/>`**: O componente pai. Ele vai guardar o estado principal `const [transactions, setTransactions] = useState([])` e as funções de adicionar e deletar.
+- **`<Dashboard/>`**: Recebe as transações via props, calcula os totais com `.reduce()` e exibe os cards de resumo.
+- **`<TransactionForm/>`**: Recebe a função `handleAddTransaction` via props. Contém os inputs locais e, ao clicar em "Salvar", chama essa função passando os dados novos.
+- **`<TransactionList/>`**: Recebe as transações via props e mapeia cada uma delas.
+- **`<TransactionItem/>`**: Recebe os dados de uma única transação e a função `handleDelete` via props.
