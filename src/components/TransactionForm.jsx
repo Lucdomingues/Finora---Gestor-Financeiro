@@ -5,7 +5,7 @@ function TransactionForm({ funcAddTransact }) {
         <input type="text" placeholder="Descrição"></input>
         <input type="number" placeholder="Valor"></input>
         <select>
-          <option disabled selected defaultValue="Qual o tipo da transação">
+          <option disabled defaultValue="Qual o tipo da transação">
             Qual o tipo da transação
           </option>
           <option value="entrada">Entrada</option>
