@@ -1,4 +1,4 @@
-## 1. Funcionalidades Principais (O que o usuário pode fazer)
+## 1. Funcionalidades Principais
 
 - **Adicionar Transação:** Um formulário para inserir uma nova movimentação, contendo:
   - Descrição (ex: "Salário", "Mercado").
@@ -9,7 +9,7 @@
 - **Exclusão:** Um botão ao lado de cada transação para removê-la da lista.
 - **Persistência de Dados:** As transações não devem sumir ao recarregar a página (usaremos o `localStorage` do navegador para isso).
 
-## 2. Requisitos Técnicos (O que você vai treinar)
+## 2. Requisitos Técnicos
 
 **JavaScript (Manipulação de Arrays):**
 

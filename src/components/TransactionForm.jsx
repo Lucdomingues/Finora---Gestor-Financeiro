@@ -1,17 +1,53 @@
 function TransactionForm({ funcAddTransact }) {
   return (
-    <div>
+    <div className="flex-1 p-4 rounded-2xl shadow-md bg-white border border-gray-100">
       <form onSubmit={funcAddTransact}>
-        <input type="text" placeholder="Descrição"></input>
-        <input type="number" placeholder="Valor"></input>
-        <select>
-          <option disabled defaultValue="Qual o tipo da transação">
-            Qual o tipo da transação
-          </option>
-          <option value="entrada">Entrada</option>
-          <option value="saida">Saída</option>
-        </select>
-        <button type="submit">Salvar</button>
+        <h2 className="text-xl font-bold mb-2">Nova Transação</h2>
+        <div className="mb-5 grid grid-cols-2 gap-4">
+          <input
+            className="p-2 border border-gray-300 rounded-lg"
+            type="text"
+            placeholder="Descrição"
+          ></input>
+          <input
+            className="p-2 border border-gray-300 rounded-lg"
+            type="number"
+            placeholder="Valor"
+          ></input>
+          <select className="p-2 border border-gray-300 rounded-lg">
+            <option disabled defaultValue="Qual o tipo da transação">
+              Qual o tipo da transação
+            </option>
+            <option value="entrada">Entrada</option>
+            <option value="saida">Saída</option>
+          </select>
+          <input
+            className="p-2 border border-gray-300 rounded-lg"
+            type="date"
+            name="date"
+            id="date"
+          />
+          <select
+            className="p-2 border border-gray-300 rounded-lg"
+            name="classification"
+            id="classification"
+          >
+            <option defaultValue="Classificação" disabled>
+              Escolha a categoria
+            </option>
+            <option value="alimentação">Alimentação</option>
+            <option value="salario">Salário</option>
+            <option value="lazer">Lazer</option>
+            <option value="contas">Contas</option>
+          </select>
+        </div>
+        <button
+          type="submit"
+          className="bg-purple-800 text-white p-1 rounded-lg w-full cursor-pointer
+"
+        >
+          Adicionar Transação
+        </button>
       </form>
     </div>
   );
