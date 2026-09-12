@@ -22,10 +22,14 @@ function Dashboard({ transactions }) {
       <div className="flex justify-between p-4 rounded-2xl shadow-md bg-white flex-1 border border-gray-100">
         <div>
           <span>Saldo Atual</span>
-          <p className="text-3xl font-bold">R$ {resultado.saldo}</p>
+          <p className="text-3xl font-bold">R$ {resultado.saldo.toFixed(2)}</p>
         </div>
         <div>
-          <p>positivo</p>
+          <p
+            className={`px-2 py-1 rounded-lg ${resultado.saldo > 0 ? "text-green-600 bg-green-100" : "text-red-600 bg-red-100"}`}
+          >
+            {`${resultado.saldo > 0 ? "Positivo" : "Negativo"}`}
+          </p>
         </div>
       </div>
       <div className="flex gap-20 p-4 rounded-2xl shadow-md bg-white flex-1 border border-gray-100">
@@ -48,7 +52,9 @@ function Dashboard({ transactions }) {
           </div>
           <div>
             <span>Entradas</span>
-            <p className="text-xl font-bold">R$ {resultado.entrada}</p>
+            <p className="text-xl font-bold">
+              R$ {resultado.entrada.toFixed(2)}
+            </p>
           </div>
         </div>
         <div className="flex gap-2 items-center justify-center">
@@ -70,7 +76,7 @@ function Dashboard({ transactions }) {
           </div>
           <div>
             <span>Saídas</span>
-            <p className="text-xl font-bold">R$ {resultado.saida}</p>
+            <p className="text-xl font-bold">R$ {resultado.saida.toFixed(2)}</p>
           </div>
         </div>
       </div>

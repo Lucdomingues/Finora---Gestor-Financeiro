@@ -4,8 +4,13 @@ function TransactionItem({ elements, handleDelete }) {
       <td className="px-4 py-3">{elements.date}</td>
       <td className="px-4 py-3"> {elements.description}</td>
       <td className="px-4 py-3">{elements.classification}</td>
-      <td className="px-4 py-3">{elements.value}</td>
-      {/* <td>{elements.type}</td> */}
+      <td className="px-4 py-3">
+        <span
+          className={`p-1 rounded-lg ${elements.type === "entrada" ? "text-green-600 bg-green-100" : "text-red-600 bg-red-100"}`}
+        >
+          R$ {Number(elements.value).toFixed(2)}
+        </span>
+      </td>
       <td className="flex justify-end px-4 py-3 gap-2">
         <button
           type="button"
