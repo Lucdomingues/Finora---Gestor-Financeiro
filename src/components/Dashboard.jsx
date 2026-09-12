@@ -1,3 +1,5 @@
+import PieChartWithCustomizedLabel from "./PieChartWithCustomizedLabel";
+
 function Dashboard({ transactions }) {
   const resultado = transactions.reduce(
     (acc, current) => {
@@ -20,6 +22,7 @@ function Dashboard({ transactions }) {
   return (
     <div>
       <h3>Dashboard</h3>
+      <PieChartWithCustomizedLabel dataD={resultado} />
       <div>
         <div>
           <p>{resultado.entrada}</p>
