@@ -1,4 +1,4 @@
-function TransactionForm({ funcAddTransact }) {
+function TransactionForm({ funcAddTransact, category, isCategoryTrue }) {
   return (
     <div className="flex-1 p-4 rounded-2xl shadow-md bg-white border border-gray-100">
       <form onSubmit={funcAddTransact}>
@@ -27,19 +27,30 @@ function TransactionForm({ funcAddTransact }) {
             name="date"
             id="date"
           />
-          <select
-            className="p-2 border border-gray-300 rounded-lg"
-            name="classification"
-            id="classification"
-          >
-            <option defaultValue="Classificação" disabled>
-              Escolha a categoria
-            </option>
-            <option value="alimentação">Alimentação</option>
-            <option value="salario">Salário</option>
-            <option value="lazer">Lazer</option>
-            <option value="contas">Contas</option>
-          </select>
+          <div>
+            <select
+              className="p-2 border border-gray-300 rounded-lg w-full"
+              name="classification"
+              id="classification"
+            >
+              <option defaultValue="Classificação" disabled>
+                Escolha a categoria
+              </option>
+              {category.map((e) => {
+                return (
+                  <option key={crypto.randomUUID()} value={e}>
+                    {e}
+                  </option>
+                );
+              })}
+            </select>
+            <button
+              onClick={isCategoryTrue}
+              className="cursor-pointer ml-1 text-xs underline"
+            >
+              Adicionar Categorias +
+            </button>
+          </div>
         </div>
         <button
           type="submit"

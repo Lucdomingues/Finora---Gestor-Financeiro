@@ -4,8 +4,15 @@ import TransactionList from "./components/TransactionList";
 import Dashboard from "./components/Dashboard";
 import Grafic from "./components/Grafic";
 import Header from "./components/Header";
+import CategoryAddForm from "./components/CategoryAddForm";
 
 function App() {
+  const [categoryIsTrue, setCategoryIsTrue] = useState(false);
+  const [category, setCategory] = useState(() => {
+    const data = JSON.parse(localStorage.getItem("category"));
+    // ------ ao carregar a página já inicia o estado global com os dados das categorias para persistência de dados e da renderização ------
+    return data ? data : [];
+  });
   const [transactions, setTransactins] = useState(() => {
     const data = JSON.parse(localStorage.getItem("transactions"));
     // ------ ao carregar a página já inicia o estado global com os dados de transações para persistência de dados e da renderização ------
@@ -16,6 +23,11 @@ function App() {
   useEffect(() => {
     localStorage.setItem("transactions", JSON.stringify(transactions));
   }, [transactions]);
+
+  // ------ observa as categorias para inserção do storage ------
+  useEffect(() => {
+    localStorage.setItem("category", JSON.stringify(category));
+  }, [category]);
 
   // ------ add transactions ------
   const handleAddTransaction = (objT) => {
@@ -51,6 +63,33 @@ function App() {
 
     setTransactins(removedTransaction);
   };
+
+  // ------ add category ------
+  const handleAddCategory = (objC) => {
+    const updateCategory = [...category];
+    console.log(objC);
+
+    if (objC.length === 0) {
+      alert("Necessário preencher o campo");
+      return;
+    }
+    if (updateCategory.includes(objC) === true) {
+      alert("Categoria já existe");
+      return;
+    }
+
+    updateCategory.push(objC);
+
+    setCategory(updateCategory);
+  };
+
+  // ------ condição para abrir popup  ------
+  const isCategoryTrue = (e) => {
+    e.preventDefault();
+
+    setCategoryIsTrue(!categoryIsTrue);
+  };
+
   return (
     <div>
       <Header />
@@ -59,7 +98,11 @@ function App() {
           <div className="">
             <Dashboard transactions={transactions} />
             <div className="flex gap-4 mb-4">
-              <TransactionForm funcAddTransact={handleAddTransaction} />
+              <TransactionForm
+                funcAddTransact={handleAddTransaction}
+                category={category}
+                isCategoryTrue={isCategoryTrue}
+              />
               <Grafic />
             </div>
             <TransactionList
@@ -67,6 +110,14 @@ function App() {
               handleDelete={handleDelete}
               handleUpdate={handleUpdate}
             />
+            {categoryIsTrue ? (
+              <CategoryAddForm
+                handleAddCategory={handleAddCategory}
+                isCategoryTrue={isCategoryTrue}
+              />
+            ) : (
+              false
+            )}
           </div>
         </div>
       </div>
