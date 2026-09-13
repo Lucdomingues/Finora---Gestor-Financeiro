@@ -1,6 +1,6 @@
 import TransactionItem from "./TransactionItem";
 
-function TransactionList({ transactions, handleDelete }) {
+function TransactionList({ transactions, handleDelete, handleUpdate }) {
   return (
     <div className="rounded-2xl shadow-md bg-white flex-1 border border-gray-100">
       <h2 className="text-xl font-bold mb-4 pl-4 pr-4 pt-4 ">
@@ -22,6 +22,7 @@ function TransactionList({ transactions, handleDelete }) {
               Amount
             </th>
             <th className="text-lg font-bold mb-4 text-start px-4 py-3"></th>
+            <th className="text-lg font-bold mb-4 text-start px-4 py-3"></th>
           </tr>
         </thead>
         <tbody>
@@ -30,7 +31,11 @@ function TransactionList({ transactions, handleDelete }) {
               key={e.id}
               className="border-gray-300 border-t even:bg-gray-100 odd:bg-white"
             >
-              <TransactionItem elements={e} handleDelete={handleDelete} />
+              <TransactionItem
+                elements={e}
+                handleDelete={handleDelete}
+                handleUpdate={handleUpdate}
+              />
             </tr>
           ))}
         </tbody>

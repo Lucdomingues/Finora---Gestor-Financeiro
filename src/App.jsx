@@ -36,6 +36,15 @@ function App() {
     setTransactins(updateTransaction);
   };
 
+  // ------ update transactions ------
+  const handleUpdate = (upt) => {
+    const updatedTransaction = transactions.map((e) =>
+      e.id === upt.id ? upt : e,
+    );
+
+    setTransactins(updatedTransaction);
+  };
+
   // ------ delete transactions ------
   const handleDelete = (id) => {
     const removedTransaction = transactions.filter((e) => e.id !== id);
@@ -56,6 +65,7 @@ function App() {
             <TransactionList
               transactions={transactions}
               handleDelete={handleDelete}
+              handleUpdate={handleUpdate}
             />
           </div>
         </div>
