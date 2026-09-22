@@ -1,44 +1,82 @@
-## 1. Funcionalidades Principais
+# 💜 Finora
 
-- **Adicionar Transação:** Um formulário para inserir uma nova movimentação, contendo:
-  - Descrição (ex: "Salário", "Mercado").
-  - Valor numérico.
-  - Tipo (Entrada ou Saída).
-- **Painel de Resumo (Dashboard):** Exibição em tempo real do Total de Entradas, Total de Saídas e o Saldo Atual.
-- **Listagem de Transações:** Uma tabela ou lista mostrando todas as movimentações cadastradas.
-- **Exclusão:** Um botão ao lado de cada transação para removê-la da lista.
-- **Persistência de Dados:** As transações não devem sumir ao recarregar a página (usaremos o `localStorage` do navegador para isso).
+Aplicação de controle financeiro pessoal feita com **React + Vite** e estilizada com **Tailwind CSS**. Permite registrar entradas e saídas, organizar transações por categoria e acompanhar o saldo em tempo real.
 
-## 2. Requisitos Técnicos
+O projeto foi desenvolvido com foco no estudo de **props** no React: todo o estado da aplicação vive em um único componente (`App`), e os demais componentes recebem dados e funções exclusivamente via props.
 
-**JavaScript (Manipulação de Arrays):**
+## ✨ Funcionalidades
 
-- Use `.reduce()` para calcular os totais (Entradas, Saídas e Saldo) a partir do array principal.
-- Use `.map()` para renderizar a lista de transações na tela.
-- Use `.filter()` para a funcionalidade de excluir uma transação específica pelo seu ID.
+- **Dashboard** com saldo atual, total de entradas e total de saídas, calculados automaticamente a partir das transações
+- **Cadastro de transações** com descrição, valor, tipo (entrada/saída), data e categoria
+- **Edição inline** de transações diretamente na tabela do histórico
+- **Exclusão** de transações
+- **Categorias personalizadas**, criadas pelo próprio usuário em um popup, com validação de campo vazio e de duplicidade
+- **Persistência com `localStorage`**: transações e categorias continuam salvas ao recarregar a página
 
-**Gerenciamento de Estado (`useState`):**
+## 🛠️ Tecnologias
 
-- Crie um estado para armazenar o array de transações.
-- Crie estados separados para controlar os inputs do formulário (descrição, valor e tipo) antes de enviá-los.
+- [React](https://react.dev/)
+- [Vite](https://vite.dev/)
+- [Tailwind CSS v4](https://tailwindcss.com/)
 
-**Efeitos Colaterais (`useEffect`):**
+## 🚀 Como rodar o projeto
 
-- Use um `useEffect` para carregar os dados do `localStorage` assim que o aplicativo abrir.
-- Use outro `useEffect` para salvar o array de transações no `localStorage` sempre que ele for modificado (adicionado ou removido).
+Pré-requisito: [Node.js](https://nodejs.org/) instalado.
 
-**Comunicação entre Componentes (Props e Prop Drilling):**
+```bash
+# Clone o repositório
+git clone https://github.com/SEU-USUARIO/finora.git
 
-- Você sentirá na prática como o estado principal no topo da aplicação precisa ser passado para baixo.
+# Entre na pasta
+cd finora
 
----
+# Instale as dependências
+npm install
 
-## 3. Arquitetura de Componentes Sugerida
+# Rode em modo de desenvolvimento
+npm run dev
+```
 
-Para treinar a passagem de Props, divida sua interface da seguinte forma:
+A aplicação ficará disponível em `http://localhost:5173`.
 
-- **`<App/>`**: O componente pai. Ele vai guardar o estado principal `const [transactions, setTransactions] = useState([])` e as funções de adicionar e deletar.
-- **`<Dashboard/>`**: Recebe as transações via props, calcula os totais com `.reduce()` e exibe os cards de resumo.
-- **`<TransactionForm/>`**: Recebe a função `handleAddTransaction` via props. Contém os inputs locais e, ao clicar em "Salvar", chama essa função passando os dados novos.
-- **`<TransactionList/>`**: Recebe as transações via props e mapeia cada uma delas.
-- **`<TransactionItem/>`**: Recebe os dados de uma única transação e a função `handleDelete` via props.
+## 📁 Estrutura
+
+```
+src/
+├── components/
+│   ├── CategoryAddForm.jsx       # Popup para criar novas categorias
+│   ├── Dashboard.jsx             # Cards de saldo, entradas e saídas
+│   ├── Header.jsx                # Cabeçalho com o logo
+│   ├── TransactionForm.jsx       # Formulário de nova transação
+│   ├── TransactionFormUpdate.jsx # Linha editável da tabela
+│   ├── TransactionItem.jsx       # Linha da tabela (visualização/edição)
+│   └── TransactionList.jsx       # Tabela do histórico de transações
+├── App.jsx                       # Estado global e funções de manipulação
+├── index.css                     # Import do Tailwind
+└── main.jsx                      # Ponto de entrada
+```
+
+## 🔄 Fluxo de dados com props
+
+O `App` guarda os estados `transactions`, `category` e o controle do popup de categorias. Os dados descem para os filhos via props, e as ações sobem de volta por meio de funções de callback.
+
+```
+App  (estado: transactions, category)
+├── Header
+├── Dashboard ← transactions
+├── TransactionForm ← category, funcAddTransact, isCategoryTrue
+├── TransactionList ← transactions, handleDelete, handleUpdate
+│   └── TransactionItem ← elements, handleDelete, handleUpdate
+│       └── TransactionFormUpdate ← elements, updatedForm
+└── CategoryAddForm ← handleAddCategory, isCategoryTrue
+```
+
+Algumas decisões do projeto:
+
+- O `Dashboard` não guarda estado próprio. Os totais são derivados de `transactions` a cada render, evitando dados duplicados.
+- O modo de edição de cada linha é um estado local do `TransactionItem`, já que só aquela linha precisa dessa informação.
+- O `TransactionFormUpdate` usa as props como valor inicial de um rascunho, que só é enviado ao `App` quando o usuário confirma a edição.
+
+## 📄 Licença
+
+Este projeto foi desenvolvido para fins de estudo.

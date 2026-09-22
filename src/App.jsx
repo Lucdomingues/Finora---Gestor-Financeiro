@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
 import Dashboard from "./components/Dashboard";
-import Grafic from "./components/Grafic";
 import Header from "./components/Header";
 import CategoryAddForm from "./components/CategoryAddForm";
 
@@ -103,7 +102,6 @@ function App() {
                 category={category}
                 isCategoryTrue={isCategoryTrue}
               />
-              <Grafic />
             </div>
             <TransactionList
               transactions={transactions}
